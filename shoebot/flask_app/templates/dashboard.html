@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1> Welcome {{user.first_name}}</h1>
+            <span>
+                <a href="/login_info">User Settings</a>
+                <a href="/logout">Logout</a>
+            </span>
+        </header>
+        <h2>Add New Item</h2>
+        <form action="purchase/create" method="POST">
+            <select name="site" id="site">
+                <option value="amazon">Amazon</option>
+                <option value="bestbuy">BestBuy</option>
+                <option value="target">Target</option>
+            </select><br>
+            <label>Item Name: </label>
+            <input type="text" name="name"> <br>
+            <label>URL: </label>
+            <input type="text" name="link"> <br>
+            <input type="submit" value="Add">
+        </form>
+            <h2>In Progress</h2>
+            <table>
+                    {% for item in user.purchases %}
+                    <tr>
+                        {% if item.purchase =='N' %}
+                        <td>{{item.name}}</td>
+                        <td><a href="/purchase/delete/{{item.id}}">Delete</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+            </table>
+    
+            <h2>Purchases Completed</h2>
+            <table>
+                {% for item in user.purchases %}
+                <tr>
+                    {% if item.purchase =='Y' %}
+                    <td>{{item.name}}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>
